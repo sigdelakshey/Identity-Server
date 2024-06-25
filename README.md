@@ -5,7 +5,7 @@
 
 ## Overview
 
-In this project, we enhanced the reliability, performance, and fault tolerance of our existing RMI-based identity server
+In this project, we implement a reliabile and fault tolerant RMI-based identity server
 that manages login names, associated real usernames and UUIDs. It allows clients to search for user information and
 ensures data persistence in case of a system crash or reboot. Like previous iteration, this server also support the
 following operations: creation, lookup, reverse-lookup, modification, delete and get.
@@ -208,36 +208,3 @@ We tested the client previously in p2 using JUnit 5. However, for this iteration
 to use unit tests.
 We instead used a manual testing process to verify the correctness of the server with a focus on election, replication,
 synchronization, and fault tolerance. The scenarios we tested can be found in the testScenarios.txt file.
-
-## Demonstration web Link
-
-- YouTube Link: [Project Demonstration](https://youtu.be/8GfvanHNMcs)
-
-## Reflection
-
-This project definitely forced me to learn a lot about distributed systems. The project was challenging and required a
-lot of time debugging issues that were more difficult to identify. Each time an error was detected during testing, it
-was usually due to an edge case that was not considered. 
-In particular was the issue of long wait times when a server
-attempted an RMI connection to an unreachable or incorrect address. Many different solutions were attempted to solve
-this and the final solution was to use to filter the server lists by attempting to connect with a normal socket. This
-worked because the connect method has a connection timeout that can be set. Setting the timeout of the Ssl-RMI sockets
-proved to be ineffective for whatever reason. 
-
-A clear technical documentation upfront does clarify the problem, approach, and anticipates challenges. However, it is
-still necessary to remain flexible and adapt as needed.
-
-## Contribution
-
-Both of us contributed equally to the project success, each focusing on different aspects. At first, we started working
-on white paper where we clearly outlined the technical details for the project. Akshey then implemented the
-functionalities for server setup, consistency and election protocol. After which, Kaden cleaned and improved the code
-structure while simultaneously working on data synchronization and server recovery. Finally, Kaden conducted through
-manual testing to identify and rectify minor issues.
-
-## Sources used
-
-The lecture notes and example files were sufficient as reference for the development of the project.
-The official Java documentation on Oracle's website was also invaluable in the debugging process.
- 
-
