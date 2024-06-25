@@ -1,7 +1,7 @@
-# Project 3 & 4/Identity Server
+# Identity Server
 
-* Author: Akshey Sigdel (CS555), Kaden Davis (CS455)
-* Class: Distributed Systems | Spring 2024
+* Team: Akshey Sigdel & Kaden Davis
+
 
 ## Overview
 
