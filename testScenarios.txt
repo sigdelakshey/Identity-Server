@@ -1,0 +1,55 @@
+A sample of test scenarios performed on the system:
+
+--------ELECTION--------
+
+Start 2 servers:
+    Expect: exactly 1 server becomes the coordinator
+Stop the coordinator:
+    Expect: the other server becomes the coordinator
+
+Start 2 servers:
+    Expect: exactly 1 server becomes the coordinator
+Start a 3rd server:
+    Expect: another election is held and exactly 1 server becomes the coordinator
+
+Start 3 servers:
+    Expect: exactly 1 server becomes the coordinator
+Stop a backup server:
+    Expect: no election is held
+
+Start 3 servers:
+    Expect: exactly 1 server becomes the coordinator
+Stop the coordinator:
+    Expect: another election is held and exactly 1 server becomes the coordinator
+
+--------REPLICATION--------
+Start 3 servers:
+Client connects to coordinator and creates an account:
+    Expect: the coordinator creates the account and the backup servers replicate the account
+Client connects to a backup server and creates an account:
+    Expect: the backup server forwards the request to the coordinator, the coordinator creates the account and the other backup server replicates the change
+Client looks up the account on any server:
+    Expect: the account is found in the servers local data without need to contact the coordinator.
+
+--------RELIABILITY/RECOVERY--------
+Start 2 servers:
+Client creates an account:
+    Expect: the account is created on both servers
+Start a 3rd server:
+    Expect: the 3rd server replicates the account data from the coordinator
+Stop the first 2 servers:
+    Expect: the 3rd server continues to serve the account data and becomes the coordinator
+    Expect: no data is lost
+Start the first 2 servers:
+    Expect: the 3rd server replicates the account data to the first 2 servers
+    Expect: no data is lost
+    Expect: a single coordinator is elected
+
+--------SYNCHRONIZATION--------
+If two events are received out of order by a backup server,
+the backup server should be able to reorder the events and apply them in the correct order.
+This was not explicitly tested as it is difficult to replicate.
+However, the design of the system should allow for this to work correctly.
+
+--------MISC--------
+Expect: all client operations work as expected regardless of which server they connect to.
